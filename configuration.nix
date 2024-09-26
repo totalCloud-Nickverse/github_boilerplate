@@ -3,20 +3,20 @@
 {
 
   imports = [
-    ./hardware-configuration.nix
+    #./hardware-configuration.nix
     ./timers.nix
+    ./redis.nix
+    ./options.nix
+    #./python.nix
   ];
 
   environment.systemPackages = with pkgs; [
-    python3
     vim
     git
   ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
   system.stateVersion = "22.05";
 
   services.openssh = {
@@ -24,6 +24,6 @@
     settings.PasswordAuthentication = false;
   };
 
-  networking.hostName = "someApp";
+  networking.hostName = "${config.thisHostname}";
 
 }

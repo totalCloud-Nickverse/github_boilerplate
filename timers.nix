@@ -1,38 +1,38 @@
-{ pkgs, inputs, ...}:
+{ pkgs, inputs, config, ...}:
 
 {
-  systemd.timers.${appName}-cd = {
-  wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "1m";
-      OnUnitActiveSec = "1m";
-      Unit = "${appName}-cd.service";
+    systemd.timers."${config.myApp.appName}-cd" = {
+    wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "1m";
+        OnUnitActiveSec = "1m";
+        Unit = "${config.myApp.appName}-cd.service";
+      };
     };
-};
 
 
-    systemd.services.${appName}-cd = {
-      description = "Continuous deployment for ${appName} website";
+    systemd.services."${config.myApp.appName}-cd" = {
+      description = "Continuous deployment for ${config.myApp.appName} website";
       path = [ pkgs.git ];
       script = ''
-        git -C ${appName} config gc.autoDetach false
-        if [ -d ${appName} ]; then
-          git -C ${appName} fetch
-          old=$(git -C ${appName} rev-parse @)
-          new=$(git -C ${appName} rev-parse @{u})
+        git -C ${config.myApp.appName} config gc.autoDetach false
+        if [ -d ${config.myApp.appHomeDir} ]; then
+          git -C ${config.myApp.appName} fetch
+          old=$(git -C ${config.myApp.appName} rev-parse @)
+          new=$(git -C ${config.myApp.appName} rev-parse @{u})
           if [ $old != $new ]; then
-            git -C ${appName} rebase --autostash
+            git -C ${config.myApp.appName} rebase --autostash
             echo "Updated from $old to $new"
           fi
         else
-          git clone ${repoURL} ${appName}
-          echo "Initialized at $(git -C ${appName} rev-parse @)"
+          git clone ${config.myApp.repoURL} ${config.myApp.appName}
+          echo "Initialized at $(git -C ${config.myApp.appName} rev-parse @)"
         fi
       '';
       serviceConfig = {
         Type = "oneshot";
         User = "root";
-        WorkingDirectory = "/var/www";
+        WorkingDirectory = "${config.myApp.appHomeDir}";
       };
     };
 

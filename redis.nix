@@ -3,11 +3,11 @@
   services = {
     redis = {
       servers = {
-        "${config.redisOptions.serverName}" = {
+        "${config.redisServerName}" = {
           enable = true;
-          port = config.redisOptions.serverPort;
-          slowLogLogSlowerThan = config.redisOptions.slowMilliseconds;
-          logfile = config.redisOptions.serverLogPath;
+          port = config.redisServerPort;
+          slowLogLogSlowerThan = config.redisSlowMilliseconds;
+          logfile = config.redisServerLogPath;
           
         };
       };

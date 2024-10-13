@@ -1,0 +1,2 @@
+-A GitHub action is not needed for deploying to the local staging environment. In this case, simply polling the repo for changes is acceptable, whereas having a runner call out to the local staging environment is more complicated to manage and has problematic security implications.
+-The Rebuild endpoint can also be kept secret if desired. This shouldn't be necessary, since the endpoint needs to be authenticated. But, if the endpoint is rotated after every rebuild, keeping it secret may still help to improve the app's security posture.

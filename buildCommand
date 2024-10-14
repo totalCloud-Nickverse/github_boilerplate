@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-nix build .#nixosConfigurations.someApp.config.system.build.vm --impure
+nix build .#nixosConfigurations.someApp.config.system.build.vm --impure --show-trace

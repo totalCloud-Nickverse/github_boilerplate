@@ -7,7 +7,8 @@
     ./timers.nix
     ./redis.nix
     ./options.nix
-    ./python.nix
+    #./python.nix
+    ./visibility.nix
     #TODO:
     #the following line is needed for virtualisation.forwardPorts to be recognized,
     #and also why --impure is needed in the buildCommand. Need to fix this to make it pure.
@@ -55,13 +56,14 @@
     forwardPorts = [
       { from = "host"; host.port = 8976; guest.port = 8000; }
       { from = "host"; host.port = 9999; guest.port = 8001; }
+      { from = "host"; host.port = 12345; guest.port = 2342; }
     ];
   };
 
   #needed to connect from the host machine
   networking.firewall = {
-    allowedTCPPorts = [ 8000 8001 ];
-    allowedUDPPorts = [ 8000 8001];
+    allowedTCPPorts = [ 8000 8001 2342];
+    allowedUDPPorts = [ 8000 8001 2342];
   };
 
 

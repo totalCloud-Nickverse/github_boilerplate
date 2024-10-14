@@ -36,9 +36,11 @@
     nixosConfigurations = {
       someApp = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        #The grafanaIP is set to 0.0.0.0 here under the assumption that this configuration is running in
+        #a local staging VM... Maybe it should somehow be set within virtualisation.vmVariant in configuration.nix
         modules =
           [ # ...
-            ./configuration.nix { config.appName = "test"; config.appHomeDir = "/home/admin/test"; config.repoURL = "https://github.com/totalCloud-Nickverse/django-tester"; }
+            ./configuration.nix { config.grafanaIP = "0.0.0.0" ; config.appName = "test"; config.appHomeDir = "/home/admin/test"; config.repoURL = "https://github.com/totalCloud-Nickverse/django-tester"; }
 	    inputs.agenix.nixosModules.default
           ];
         specialArgs = { inherit inputs; };

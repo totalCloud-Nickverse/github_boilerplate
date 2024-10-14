@@ -11,6 +11,10 @@ Quickstart (Linux):
 6. On the host machine, go to localhost:9999 in your browser to see the hello world page displayed by gunicorn.
 
 
+To view grafana dashboard in the running vm:
+0. Get to step 5 above
+1. On the host machine, go to localhost:12345
+
 To build an AMI with matching configuration:
 
 nix build .#ami
